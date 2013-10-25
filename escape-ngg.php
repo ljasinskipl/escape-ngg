@@ -30,6 +30,11 @@ add_action( 'admin_init', function() {
 	error_reporting( E_ALL );
 	ini_set( 'display_errors', 1 );
 	set_time_limit( 600 );
+	
+	if( isset( $_GET['offset'] ) )
+		$offset = intval( $_GET['offset'] );
+	else
+		$offset = 0;
 
 	$uploads = wp_upload_dir();
 	$baseurl = $uploads['baseurl'];
@@ -42,8 +47,8 @@ add_action( 'admin_init', function() {
 		's' => '[nggallery',
 		'post_type' => array( 'post', 'page' ),
 		'post_status' => 'any',
-		'posts_per_page' => 50,
-		'offset' => 0,
+		'posts_per_page' => 25,
+		'offset' => $offset,
 	);
 
 	while ( $posts = get_posts( $query ) ) {
